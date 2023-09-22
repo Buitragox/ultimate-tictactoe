@@ -39,7 +39,7 @@ export class Game {
         this.winner = "";
 
         // Returns itself to handle svelte reactivity 
-        // like this: game = game.localMove;
+        // like this: game = game.localMove();
         return this;
     }
 
@@ -63,7 +63,7 @@ export class Game {
         }
 
         // Returns itself to handle svelte reactivity 
-        // like this: game = game.localMove;
+        // like this: game = game.localMove();
         return this;
     }
 

@@ -6,15 +6,15 @@
 </script>
 
 <main>
+    <div class="grid place-items-center">
+        <h1 class="font-medium text-3xl p-2 pb-10">The best tic-tac-toe in the world</h1>
 
-    <h1>The best tic-tac-toe in the world</h1>
-
-    <div class="game-container">
-        <div class="grid-container">
-        {#each game.board[0][0].matrix as row, i}
-            {#each row as value, j}
-                <button class="grid-item" on:click={() => {game = game.localMove(i, j);}}>
-                    {value}
+        <div class="grid grid-cols-3 border-4 border-pink-400">
+        {#each game.board[0][0].matrix as row, i (i)}
+            {#each row as value, j (j)}
+                <button class="col-span-1 border-2 border-white w-20 h-20" 
+                        on:click={() => {game = game.localMove(i, j);}}>
+                    <p class="text-3xl">{value}</p>
                 </button> 
             {/each}
         {/each}
@@ -22,17 +22,30 @@
     </div>
 
     {#if game.isGameFinished()}
-        <p>The winner is {game.winner}</p>
+        <p class="text-3xl">The winner is {game.winner}!</p>
     {/if}
 
-    <button on:click={() => {game = game.resetGame();}}>Reset</button>
-    <br/> 
+    <!-- Fighting with styles i love it -->
 
-    <a href="/">Lets go back</a>
+    <div class="grid grid-cols-2">
+        <a class="max-w-[6.5rem] border-2 border-solid border-green-50 rounded p-1.5 
+            bg-green-600 hover:bg-green-500" href="/">
+            Lets go back
+        </a>
+
+        <button class="border-2 border-solid border-red-50 rounded p-1.5 bg-red-600 hover:bg-red-500" 
+        on:click={() => {game = game.resetGame();}}>
+            Reset
+        </button>
+    </div>
+
+    
+
+    
 
 </main>
 
-<style>
+<!-- <style>
     .game-container {
         display: grid;
         place-items: center;
@@ -70,4 +83,4 @@
         text-align: center;
         font-size: xx-large;       
     }
-</style>
+</style> -->
