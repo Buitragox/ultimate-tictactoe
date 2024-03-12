@@ -1,25 +1,20 @@
 import { Section } from './section';
-import type { Board } from "./board";
+import { Board } from './board';
 
 /**
  * Represents the Ultimate-TicTacToe game
  * and handles all of the game logic.
  */
-export class Game implements Board {
+export class Game extends Board {
 	matrix: Section[][];
 	private nextSecRow: number;
 	private nextSecCol: number;
 	playerTurn: string;
 	localPlayer: string;
 	enemyPlayer: string;
-	winner: string;
 
-	constructor(
-		matrix: string | undefined = undefined,
-		playerTurn: string | undefined = undefined,
-		localPlayer: string | undefined = undefined,
-		winner: string | undefined = undefined
-	) {
+	constructor(matrix?: string, playerTurn?: string, localPlayer?: string, winner?: string) {
+		super();
 		this.matrix = [];
 		this.playerTurn = playerTurn ? playerTurn : 'x';
 		this.localPlayer = localPlayer ? localPlayer : 'x';
@@ -34,6 +29,10 @@ export class Game implements Board {
 		for (let i = 0; i < 3; i++) {
 			this.matrix.push([new Section(), new Section(), new Section()]);
 		}
+	}
+
+	getBoardLength(): number {
+		return this.matrix.length;
 	}
 
 	getTileOwner(row: number, col: number): string {
@@ -73,9 +72,8 @@ export class Game implements Board {
 	 * @returns the game object
 	 */
 	localMove(secRow: number, secCol: number, i: number, j: number): Game {
-		let section = this.matrix[secRow][secCol];
 		if (this.isMoveValid(secRow, secCol, i, j)) {
-			this.processMove(i, j, section);
+			this.processMove(secRow, secCol, i, j);
 			if (!this.isGameFinished()) {
 				this.computerMove();
 			}
@@ -95,8 +93,8 @@ export class Game implements Board {
 	 */
 	isNextSection(secRow: number, secCol: number): boolean {
 		return (
-			(this.nextSecRow === -1 || this.nextSecRow === secRow) &&
-			(this.nextSecCol === -1 || this.nextSecCol === secCol)
+			(this.nextSecRow === secRow && this.nextSecCol === secCol) ||
+			(this.nextSecRow === -1 && this.nextSecCol === -1)
 		);
 	}
 
@@ -132,27 +130,28 @@ export class Game implements Board {
 	 * @param j column index of the select section
 	 * @param section selected section
 	 */
-	private processMove(i: number, j: number, section: Section) {
-		console.log('Processing', this.playerTurn);
+	private processMove(secRow: number, secCol: number, i: number, j: number) {
+		let section = this.matrix[secRow][secCol];
+
 		section.matrix[i][j] = this.playerTurn;
-		section.checkGame(i, j, this.playerTurn);
+		section.checkWin(i, j, this.playerTurn);
+
+		this.checkWin(secRow, secCol, this.playerTurn);
+
+		if (this.isGameFinished()) {
+			console.log('Winner:', this.winner);
+		}
 
 		// Change the current player after the move was checked.
 		this.playerTurn = this.playerTurn === 'x' ? 'o' : 'x';
 
-		// Change the next playable section to the coordinates of the last played tile.
+		// TODO when the next section i,j has a winner, decide what to do.
 		this.nextSecRow = i;
 		this.nextSecCol = j;
-
-		// TODO This should set the winner after all sections were validated.
-		this.winner = section.winner;
-		if (this.winner !== '') {
-			console.log('Winner:', this.winner);
-		}
 	}
 
-	private nextSection() : Section {
-		return this.matrix[this.nextSecRow][this.nextSecCol]
+	private nextSection(): Section {
+		return this.matrix[this.nextSecRow][this.nextSecCol];
 	}
 
 	/**
@@ -164,7 +163,7 @@ export class Game implements Board {
 
 		const index = Math.floor(Math.random() * emptySpaces.length);
 		let [i, j] = emptySpaces[index];
-		this.processMove(i, j, section);
+		this.processMove(this.nextSecRow, this.nextSecCol, i, j);
 	}
 
 	/**
