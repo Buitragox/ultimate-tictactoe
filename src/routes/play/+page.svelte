@@ -6,19 +6,40 @@
 
 <main>
 	<div class="grid place-items-center p-2">
-		<h1 class="font-medium text-zinc-50 text-3xl p-2 pb-10">The best tic-tac-toe in the world</h1>
+		<h1 class="font-medium text-zinc-50 text-3xl p-2 pb-10">
+			The best Ultimate Tic-Tac-Toe in the world
+		</h1>
 
-		<div class="grid grid-cols-3 border-4 border-pink-400">
-			{#each game.board[0][0].matrix as row, i (i)}
-				{#each row as value, j (j)}
-					<button
-						class="col-span-1 border-2 border-white w-20 h-20 hover:bg-slate-600"
-						on:click={() => {
-							game = game.localMove(i, j);
-						}}
+		<div class="grid grid-cols-3">
+			{#each game.matrix as section_row, sec_i (sec_i)}
+				{#each section_row as section, sec_j (sec_j)}
+					<div
+						class="col-span-1 grid grid-cols-3 border-4 items-center justify-items-center
+						{game.isNextSection(sec_i, sec_j) ? 'border-pink-400' : 'border-blue-400'}"
 					>
-						<p class="text-3xl text-zinc-50">{value}</p>
-					</button>
+						<!-- Mark the winner of a section -->
+						{#if section.winner === 'x'}
+							<p class="absolute text-[9rem] z-10">X</p>
+						{:else if section.winner === 'o'}
+							<p class="absolute text-[9rem] z-10">O</p>
+						{/if}
+
+						{#each section.matrix as row, i (i)}
+							{#each row as value, j (j)}
+								<button
+									class="relative col-span-1 border-2 border-white w-10 h-10
+								{game.isNextSection(sec_i, sec_j) ? 'hover:bg-slate-600' : ''}"
+									on:click={() => {
+										game = game.localMove(sec_i, sec_j, i, j);
+									}}
+								>
+									<p class="text-3xl text-zinc-50">
+										{value}
+									</p>
+								</button>
+							{/each}
+						{/each}
+					</div>
 				{/each}
 			{/each}
 		</div>
