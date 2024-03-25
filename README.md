@@ -19,27 +19,30 @@ Some terminology that will be used to explain the game:
 
 ### Rules
 
-The first movement is free, which means player 1 can play on whatever board and square he wants. After that, the next board to play on is decided by the previous player's move. Whichever square your opponent picks, your next move will have to be on the corresponding board. 
+Player 1 gets a free move at the start. After that, the next board to play on is decided by the previous player's move. Whichever square your opponent picks, your next move will have to be on the corresponding board. 
 
 For example, if player 1 played on a bottom-right square, your next move will have to be on the bottom-right board:
 
-1. X plays center board, bottom right square:
+1. X plays center board, bottom-right square:
 
-<center>
-    <img src="./static/example1.png" width="200">
-</center>
+<div align="center">
+    <img src="./static/example1.png" width="250"
+     alt="X plays center board, bottom-right square">
+</div>
 
-2. O has to play on the bottom right board:
+2. O has to play on the bottom-right board:
 
-<center>
-    <img src="./static/example2.png" width="200">
-</center>
+<div align="center">
+    <img src="./static/example2.png" width="250"
+     alt="O plays bottom-right board, bottom-mid square">
+</div>
 
 3. X plays top-right square, then O plays bottom-right:
 
-<center>
-    <img src="./static/example3.png" width="200">
-</center>
+<div align="center">
+    <img src="./static/example3.png" width="250"
+     alt="X plays top-right square, then O plays bottom-right">
+</div>
 
 This continues until someone wins 3 boards in a row.
 
