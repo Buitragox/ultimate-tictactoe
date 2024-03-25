@@ -26,21 +26,21 @@ For example, if player 1 played on a bottom-right square, your next move will ha
 1. X plays center board, bottom-right square:
 
 <div align="center">
-    <img src="./static/example1.png" width="250"
+    <img src="./static/example1.png" width="300"
      alt="X plays center board, bottom-right square">
 </div>
 
 2. O has to play on the bottom-right board:
 
 <div align="center">
-    <img src="./static/example2.png" width="250"
+    <img src="./static/example2.png" width="300"
      alt="O plays bottom-right board, bottom-mid square">
 </div>
 
 3. X plays top-right square, then O plays bottom-right:
 
 <div align="center">
-    <img src="./static/example3.png" width="250"
+    <img src="./static/example3.png" width="300"
      alt="X plays top-right square, then O plays bottom-right">
 </div>
 
